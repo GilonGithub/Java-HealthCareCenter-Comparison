@@ -10,58 +10,67 @@ public class Driver {
 	
 	public static Scanner input = new Scanner(System.in);
 	
-	
-	
-	
-	
-	public static void getUser(ArrayList<User> users) {
-		int userChoice;
-		boolean isFound;
+	public static Appointments setAppoitment(Patient patient) {
+		LocalDateTime dateTime;
 		do {
-			System.out.println("\nEnter your ID: ");
-			userChoice = input.nextInt();
-			isFound = (userChoice, doctors);
-		} while (!isFound);
-		
-		for (Doctor d : doctors) {
-			if (d.getDoctorId() == userChoice) {
-				System.out.println(d);
-			}
-		}
+			Scanner input = new Scanner(System.in);
+			System.out.println("\nEnter the date in format yyyy-mm-dd hh:mm");
+			String userDate = input.nextLine();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); 
+			dateTime = LocalDateTime.parse(userDate, formatter);
+			
+		} while (Objects.isNull(dateTime) || dateTime.isBefore(LocalDateTime.now()));
+				
+		return(new Appointments(patient, dateTime));
 		
 	}
 	
-	public static boolean searchForDoctor(int doctorId, ArrayList<Doctor> doctors) {
-		boolean isFound = false;
-		for (Doctor d : doctors) {
-			if (d.getDoctorId() == doctorId) {
-				isFound = true;
-			}
-		}
-				return isFound;	
-	}
-	
-	
+	public static User searchForUser(ArrayList<User> users) {
+		
+		boolean isFound = true;
+		int userInput;
+		
+		do {
 
-	public static Doctor searchForDoctorAddApt(ArrayList<Doctor> doctors, Appointments appointment) {
-		int userChoice;
-		boolean isFound;
-		do {
-			System.out.println("\nEnter doctor's ID: ");
-			userChoice = input.nextInt();
-			isFound = searchForDoctor(userChoice, doctors);
+			if(!isFound) {
+				System.err.println("\nUser not found!");
+			}
+			
+			System.out.println("\nEnter the ID: ");
+			userInput = input.nextInt();
+			
+			for (User u : users) {
+				if (u.getID() == userInput) {
+					return u;
+				}
+			}
+			
+			isFound = false;
+			
 		} while (!isFound);
 		
-		for (Doctor d : doctors) {
-			if (d.getDoctorId() == userChoice) {
-				d.addAppointment(appointment);
-				return d;
+		return null;
+	}
+	
+	public static Doctor findADoctor(ArrayList<User> users) {
+
+		User doctor = null; //initiate a null doctor
+		
+		do {
+			System.out.println("\nFIND A DOCTOR");
+			doctor = searchForUser(users);
+			
+			if(!(doctor instanceof Doctor)) {
+				System.err.println("\nThe selected user is not a doctor!");
 			}
-		}
-		return null;		
+			
+		} while(!(doctor instanceof Doctor)); //find user until a doctor is found
+		
+		return (Doctor) doctor; //downcast the user to a doctor
 	}
 	
 	public static void printAppointment(Patient patient, Appointments newAppointment, Doctor doctor) {
+		
 		System.out.println("\nPatient: " + patient.getFirstName() + " " + patient.getLastName()
 							+ newAppointment 
 							+ " with doctor " + doctor.getFirstName() + " " + doctor.getLastName());
@@ -132,19 +141,29 @@ public class Driver {
 		for (User u: users) {
 			System.out.println(u.getLastName());
 		}
-		/*
-		Collections.sort(d1.getListOfAppointments());
-		for (Appointments a: d1.getListOfAppointments()) {
-			System.out.println(a);
-		}
-		*/
+
 		
-		System.out.println("Enter your ID:");
-		int userId = input.nextInt();
+		User foundUser = searchForUser(users);
+
+		if(foundUser instanceof Patient) {
+			
+			Patient p = (Patient) foundUser; //downcast the user to a patient
+			
+			System.out.println(p); //print the patient info
+			
+			Appointments newAppointment = setAppoitment(p); //get the appointment from user
+			
+			Doctor foundDoctor = findADoctor(users); //find a doctor
 		
-		if (userId instanceof Patient) {
+			printAppointment(p, newAppointment, foundDoctor); //print appointment
 			
+		} else if(foundUser instanceof Doctor) {
+			
+			Doctor d = (Doctor) foundUser; //downcast user to a doctor
+			
+			System.out.println(d); //print doctor info and his appointments
 		}
-			
+		
+		
 }
 }

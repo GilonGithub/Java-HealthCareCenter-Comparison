@@ -40,15 +40,10 @@ public class Patient extends User {
 		this.gender = gender.isEmpty() || Objects.isNull(gender) ? "Unknown" : gender;
 	}
 	
-	/*
-	public void setPatientId(int patientId) {
-		this.patientId = patientId < 100000 && patientId > 1000 ? patientId : 1000 + (int)Math.random(); 
-	}
-	*/
 	
 	@Override
 	public String toString() {
-		return  super.toString() + "\nPatient ID: " + super.getID()
+		return  super.printInfo() + "\nPatient ID: " + super.getID()
 						+ "\nGender: " + getGender() 
 						+ "\nBirth Date: " + getBirthDate();
 	}

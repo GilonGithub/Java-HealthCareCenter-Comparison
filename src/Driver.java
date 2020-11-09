@@ -139,7 +139,7 @@ public class Driver {
 		
 		Collections.sort(users, new UserSorter.SortByLastName());
 		for (User u: users) {
-			System.out.println(u.getLastName());
+			System.out.println(u.printInfo() + "\n");
 		}
 
 		

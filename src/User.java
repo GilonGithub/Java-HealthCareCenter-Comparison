@@ -48,9 +48,9 @@ public class User {
 		this.email = email.isEmpty() || Objects.isNull(email) ? "Unknown" : email;
 	}
 	
-	@Override
-	public String toString() {
-		return  "Name: " + getFirstName() + " " + getLastName()
+	
+	public String printInfo() {
+		return  "Name: " + getLastName() + ", " + getFirstName()
 						+ "\nEmail: " + getEmail()
 						+ "\nPhone number: " + getPhoneNum();
 	}

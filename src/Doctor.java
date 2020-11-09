@@ -47,7 +47,7 @@ public class Doctor extends User {
 	
 	@Override
 	public String toString() {
-		String output = super.toString();
+		String output = super.printInfo();
 		output += String.format("\nDoctor ID: %s "
 							+ "\nspecialization: %s\n", 
 							super.getID(), specialization);

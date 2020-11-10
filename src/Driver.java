@@ -104,7 +104,8 @@ public class Driver {
 		
 		
 		Appointments apt1 = new Appointments(p1, LocalDateTime.of(2020, 11, 20, 10, 15));
-		Appointments apt2 = new Appointments(p2, LocalDateTime.of(2020, 12, 20, 13, 15));
+		Appointments apt2 = new Appointments(p3, LocalDateTime.of(2021, 01, 18, 10, 00));
+		Appointments apt3 = new Appointments(p2, LocalDateTime.of(2020, 12, 20, 13, 15));
 		
 		
 		Doctor d1 = new Doctor(7777, "Jack", "Novy", "797 384 8364", "jackN@gmail.com", "gynecologist");
@@ -120,6 +121,7 @@ public class Driver {
 			
 		d1.addAppointment(apt1);
 		d1.addAppointment(apt2);
+		d1.addAppointment(apt3);
 		
 		ArrayList<User> users = new ArrayList<>();
 		users.add(d1);
@@ -162,6 +164,12 @@ public class Driver {
 			Doctor d = (Doctor) foundUser; //downcast user to a doctor
 			
 			System.out.println(d); //print doctor info and his appointments
+			
+			Collections.sort(d.getListOfAppointments());
+			
+			for(Appointments a : d.getListOfAppointments()) {
+				System.out.println(a);
+			}
 		}
 		
 		

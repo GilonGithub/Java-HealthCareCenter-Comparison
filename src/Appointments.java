@@ -43,7 +43,7 @@ public class Appointments implements Comparable<Appointments> {
 
 	@Override
 	public int compareTo(Appointments o) {
-		return o.getAppointmentDate().compareTo(this.getAppointmentDate());
+		return this.getAppointmentDate().compareTo(o.getAppointmentDate());
 	}
 
 }

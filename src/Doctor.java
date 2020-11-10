@@ -52,10 +52,7 @@ public class Doctor extends User {
 							+ "\nspecialization: %s\n", 
 							super.getID(), specialization);
 		output += "\nLIST OF APPOINTMENTS:\n";
-		for(Appointments a : appointments) {
-			output += a + "\n";
-		}
-		
+				
 		return output;
 				
 	}
